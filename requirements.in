@@ -1,0 +1,5 @@
+pip-tools
+pandas
+openpyxl
+yahoofinance
+yfinance

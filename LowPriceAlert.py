@@ -19,6 +19,7 @@ v1.1 adds functionality to output whether or not the z-score is above the define
 # This function returns the last trading day for a specified number of days back
 
 from datetime import date, timedelta, datetime
+import yfinance as yf
 
 def get_Trading_StartDate(aDate, daysBack):
     aDate -= timedelta(days=daysBack)
@@ -27,7 +28,7 @@ def get_Trading_StartDate(aDate, daysBack):
     return aDate
 
 #begin program
-import yfinance as yf
+
 
 
 #hardcoded for now, can add functionality for user input / to search a pre-set interest list
