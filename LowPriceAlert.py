@@ -1,3 +1,6 @@
+from datetime import date, timedelta, datetime
+import yfinance as yf
+
 '''
 Property of Andrew Sommer
 March 24, 2020
@@ -18,44 +21,41 @@ v1.1 adds functionality to output whether or not the z-score is above the define
 
 # This function returns the last trading day for a specified number of days back
 
-from datetime import date, timedelta, datetime
-import yfinance as yf
 
-def get_Trading_StartDate(aDate, daysBack):
-    aDate -= timedelta(days=daysBack)
-    while aDate.weekday() >4: #Mon-Fri are 0-4
-        aDate-= timedelta(days=1)
-    return aDate
+def get_trading_start_date(date, days_of_trading):
+    first_trading_date = date - timedelta(days=days_of_trading)
+    while first_trading_date.weekday() > 4: #Mon-Fri are 0-4
+        first_trading_date -= timedelta(days=1)
+    return first_trading_date
 
-#begin program
+# begin program
 
 
-
-#hardcoded for now, can add functionality for user input / to search a pre-set interest list
-#allow for functionality to pull from robinhood?
+# hardcoded for now, can add functionality for user input / to search a pre-set interest list
+# allow for functionality to pull from robinhood?
 tickers = "SPY"
 
-#for now, it is 5 trading days prior, though this can be a user input as well
-startDate = get_Trading_StartDate(date.today(), 5)
 
-#for now it's 5 days, though this can be a user input as well
+# f or now, it is 5 trading days prior, though this can be a user input as well
+start_date = get_trading_start_date(date.today(), 5)
+
+# for now it's 5 days, though this can be a user input as well
 period = "5d"
 
-#For now it's 15m, but that can be user input as well
+# For now it's 15m, but that can be user input as well
 interval = "15m"
 
-data = yf.download(tickers,startDate,endDate=date.today(),period=period, interval=interval)
-breakpoint()
+data = yf.download(tickers, start_date, endDate=date.today(), period=period, interval=interval)
 
-#Use pandas to write to excel
+# Use pandas to write to excel
 now = datetime.now().replace(tzinfo=None)
 print(type("Stock pull at: " + now.strftime("%Y-%m-%d %H:%M:%S")))
 data.to_excel("Stock pull at: " + now.strftime("%Y-%m-%d %H:%M:%S")+".xlsx")
 
 
-#pandas dataframe displayed as:
+# pandas dataframe displayed as:
 '''
-Adj. Close      Close       High        Low     Open        Volume
+Datetime      Open        High         Low       Close   Adj Close    Volume
 '''
 
 
