@@ -11,6 +11,7 @@ git clone [repo_url]
 To make a change directly:
 	git pull
 	... do changes ...
+	git add --all
 	git commit -m "[message about what was changed]"
 	git push
 
@@ -18,6 +19,7 @@ To make a change you want reviewed:
 	git pull
 	git checkout -b branch_name_for_edits
 	... do changes ...
+	git add --all
 	git commit -m "[message about what was changed]"
 	git push
 
