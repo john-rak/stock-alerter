@@ -11,6 +11,7 @@ click==7.1.1              # via pip-tools
 et-xmlfile==1.0.1         # via openpyxl
 idna==2.9                 # via requests
 jdcal==1.4.1              # via openpyxl
+lxml==4.5.0               # via -r requirements.in
 multitasking==0.0.9       # via yfinance
 numpy==1.18.2             # via pandas, yfinance
 openpyxl==3.0.3           # via -r requirements.in

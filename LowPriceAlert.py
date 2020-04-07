@@ -1,6 +1,9 @@
 from datetime import date, timedelta, datetime
 import yfinance as yf
+import pandas as pd
+import numpy as np
 
+from scraper import StockScraper
 '''
 Property of Andrew Sommer
 March 24, 2020
@@ -33,7 +36,7 @@ def get_trading_start_date(date, days_of_trading):
 
 # hardcoded for now, can add functionality for user input / to search a pre-set interest list
 # allow for functionality to pull from robinhood?
-tickers = "SPY"
+tickers = "SPY aapl goog"
 
 
 # f or now, it is 5 trading days prior, though this can be a user input as well
@@ -45,12 +48,26 @@ period = "5d"
 # For now it's 15m, but that can be user input as well
 interval = "15m"
 
-data = yf.download(tickers, start_date, endDate=date.today(), period=period, interval=interval)
+data = yf.download("SPY", start_date=start_date, endDate=date.today(), group_by='ticker', period=period, interval=interval)
+datas = yf.download(tickers, start_date=start_date, endDate=date.today(), group_by='ticker', period=period, interval=interval)
+
+
+
+msft = yf.Ticker("MSFT")
+
+
+if msft.financials.empty:
+    scraper = StockScraper("MSFT")
+    scraper.pull_all_data()
+    financials = scraper.financials
+else:
+    financials = msft.financials
+
 
 # Use pandas to write to excel
 now = datetime.now().replace(tzinfo=None)
 print(type("Stock pull at: " + now.strftime("%Y-%m-%d %H:%M:%S")))
-data.to_excel("Stock pull at: " + now.strftime("%Y-%m-%d %H:%M:%S")+".xlsx")
+#data.to_excel("Stock pull at: " + now.strftime("%Y-%m-%d %H:%M:%S")+".xlsx")
 
 
 # pandas dataframe displayed as:
